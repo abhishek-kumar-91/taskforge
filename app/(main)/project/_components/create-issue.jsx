@@ -88,31 +88,20 @@ export default function IssueCreationDrawer({
 
   return (
     <Drawer open={isOpen} onClose={onClose}>
-      <DrawerContent>
+      <DrawerContent className="flex" >
         <DrawerHeader>
           <DrawerTitle>Create New Issue</DrawerTitle>
         </DrawerHeader>
         {usersLoading && <BarLoader width={"100%"} color="#36d7b7" />}
-        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-1">
-              Title
-            </label>
-            <Input id="title" {...register("title")} />
+        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-2">
+          <div className="flex gap-2">
+            <Input id="title" {...register("title")} placeholder="Enter your title....."/>
             {errors.title && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.title.message}
               </p>
             )}
-          </div>
 
-          <div>
-            <label
-              htmlFor="assigneeId"
-              className="block text-sm font-medium mb-1"
-            >
-              Assignee
-            </label>
             <Controller
               name="assigneeId"
               control={control}
@@ -144,7 +133,7 @@ export default function IssueCreationDrawer({
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium mb-1"
+              className=" text-sm font-medium"
             >
               Description
             </label>
@@ -152,7 +141,9 @@ export default function IssueCreationDrawer({
               name="description"
               control={control}
               render={({ field }) => (
-                <MDEditor value={field.value} onChange={field.onChange} />
+                <MDEditor value={field.value} onChange={field.onChange}
+                className="editor-adjust"
+                 />
               )}
             />
           </div>
@@ -160,7 +151,7 @@ export default function IssueCreationDrawer({
           <div>
             <label
               htmlFor="priority"
-              className="block text-sm font-medium mb-1"
+              className="block text-sm font-medium"
             >
               Priority
             </label>

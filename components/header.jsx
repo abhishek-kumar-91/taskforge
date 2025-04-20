@@ -14,7 +14,7 @@ const Header = async() => {
     <header className="container mx-auto">
         <nav className="py-6 px-4 flex justify-between items-center">
             <Link href="/" className="flex items-center">
-                <Image src="/logo1.png" width={24} objectFit="none" height={24} alt="taskForge"
+                <Image src="/logo1.png" width={24} height={24} alt="taskForge"
                 className="h-10 w-auto object-contain" />
                 <h3 className="border-l-2 text-lg font-bold border-amber-500 px-2 text-gray-900">
                     <span className="underline">Task</span>

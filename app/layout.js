@@ -17,7 +17,6 @@ export default function RootLayout({ children }) {
       <body className="antialiased dotted-background" suppressHydrationWarning >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

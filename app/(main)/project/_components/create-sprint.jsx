@@ -94,7 +94,7 @@ export default function SprintCreationForm({
                   id="name"
                   {...register("name")}
                   readOnly
-                  className="bg-slate-950"
+                  
                 />
                 {errors.name && (
                   <p className="text-red-500 text-sm mt-1">
@@ -114,11 +114,11 @@ export default function SprintCreationForm({
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
-                          className={`w-full justify-start text-left font-normal bg-slate-950 ${
+                          className={`w-full justify-start text-left font-normal  ${
                             !dateRange && "text-muted-foreground"
                           }`}
                         >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          <CalendarIcon className="mr-2 h-4 w-4 p-4" />
                           {dateRange.from && dateRange.to ? (
                             format(dateRange.from, "LLL dd, y") +
                             " - " +
@@ -129,17 +129,18 @@ export default function SprintCreationForm({
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="w-auto bg-slate-900"
+                        className="w-auto p-4"
                         align="start"
                       >
                         <DayPicker
                           classNames={{
-                            chevron: "fill-blue-500",
-                            range_start: "bg-blue-700",
-                            range_end: "bg-blue-700",
-                            range_middle: "bg-blue-400",
+                            day: "p-2 mx-[2px] my-[2px] rounded",
+                            weekday: "px-2 text-gray-600", 
+                            range_start: "bg-yellow-400",
+                            range_end: "bg-yellow-400",
+                            range_middle: "bg-gray-400",
                             day_button: "border-none",
-                            today: "border-2 border-blue-700",
+                            today: "border-2 border-yellow-700",
                           }}
                           mode="range"
                           disabled={[{ before: new Date() }]}

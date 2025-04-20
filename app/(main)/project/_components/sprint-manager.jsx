@@ -94,7 +94,7 @@ export default function SprintManager({
     <>
       <div className="flex justify-between items-center gap-4">
         <Select value={sprint.id} onValueChange={handleSprintChange}>
-          <SelectTrigger className="bg-slate-950 self-start">
+          <SelectTrigger className="text-gray-900 self-start">
             <SelectValue placeholder="Select Sprint" />
           </SelectTrigger>
           <SelectContent>

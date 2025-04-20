@@ -27,7 +27,7 @@ export default async function ProjectPage({ params }) {
           orgId={project.organizationId}
         />
       ) : (
-        <div className="text-gray-90">Create a Sprint from button above</div>
+        <div className="text-gray-900">Create a Sprint from button above</div>
       )}
     </div>
   );

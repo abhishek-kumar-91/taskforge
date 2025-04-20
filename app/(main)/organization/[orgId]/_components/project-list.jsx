@@ -12,7 +12,7 @@ export default async function ProjectList({ orgId }) {
       <p>
         No projects found.{" "}
         <Link
-          className="underline underline-offset-2 text-blue-200"
+          className="underline underline-offset-2 text-gray-900"
           href="/project/create"
         >
           Create New.
