@@ -110,9 +110,9 @@ export async function getOrganizationUsers(orgId) {
   if (!user) {
     throw new Error("User not found");
   }
-
+  const clerk = await clerkClient()
   const organizationMemberships =
-    await clerkClient().organizations.getOrganizationMembershipList({
+    await clerk.organizations.getOrganizationMembershipList({
       organizationId: orgId,
     });
 
