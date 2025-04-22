@@ -34,7 +34,7 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      # 7. Deploy to Vercel
+      # 7. Deploy to Vercel without any error
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
         with:
