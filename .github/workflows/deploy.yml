@@ -9,7 +9,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    env:  
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
     steps:
       # 1. Checkout repo
       - name: Checkout code
