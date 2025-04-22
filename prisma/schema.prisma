@@ -23,6 +23,7 @@ model User {
   imageUrl      String?
   createdIssues Issue[]   @relation("Reporter")
   assignedIssues Issue[]  @relation("Assignee")
+  messages      Message[] 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -98,4 +99,16 @@ enum IssuePriority {
   MEDIUM
   HIGH
   URGENT
+}
+
+model Message {
+  id            Int      @id @default(autoincrement())
+  message       String
+  clerkUserId   String   // Add Clerk's user ID
+  organizationId String  // Clerk organization ID
+  createdAt     DateTime @default(now())
+
+  user          User     @relation(fields: [clerkUserId], references: [clerkUserId], onDelete: Cascade)  // Change relation to use clerkUserId
+  @@index([organizationId])
+  @@index([clerkUserId])
 }

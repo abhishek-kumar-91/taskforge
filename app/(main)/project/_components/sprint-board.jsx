@@ -20,7 +20,6 @@ function reorder(list, startIndex, endIndex) {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 }
 
@@ -69,17 +68,25 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
   } = useFetch(updateIssueOrder);
 
   const onDragEnd = async (result) => {
-    if (currentSprint.status === "PLANNED") {
-      toast.warning("Start the sprint to update board");
-      return;
-    }
+    console.log("🟡 Drag End Triggered");
+    console.log("Result:", result);
+
+    // if (currentSprint.status === "PLANNED") {
+    //   toast.warning("Start the sprint to update board");
+    //   console.log("⚠️ Sprint is in PLANNED state, aborting drag.");
+    //   return;
+    // }
+
     if (currentSprint.status === "COMPLETED") {
       toast.warning("Cannot update board after sprint end");
+      console.log("⚠️ Sprint is COMPLETED, aborting drag.");
       return;
     }
+
     const { destination, source } = result;
 
     if (!destination) {
+      console.log("⛔ No destination, exiting.");
       return;
     }
 
@@ -87,54 +94,70 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
+      console.log("🔁 Drag position unchanged, exiting.");
       return;
     }
 
+    console.log("✅ Valid drag. Proceeding with reorder...");
     const newOrderedData = [...issues];
+    console.log("🔎 Current issues:", newOrderedData);
 
-    // source and destination list
     const sourceList = newOrderedData.filter(
       (list) => list.status === source.droppableId
     );
-
     const destinationList = newOrderedData.filter(
       (list) => list.status === destination.droppableId
     );
 
+    console.log("📦 Source List:", sourceList);
+    console.log("📦 Destination List:", destinationList);
+
     if (source.droppableId === destination.droppableId) {
-      const reorderedCards = reorder(
-        sourceList,
-        source.index,
-        destination.index
-      );
+      console.log("🔄 Same column drag");
+      const reorderedCards = reorder(sourceList, source.index, destination.index);
+      console.log("✅ Reordered Cards:", reorderedCards);
 
       reorderedCards.forEach((card, i) => {
         card.order = i;
       });
-    } else {
-      // remove card from the source list
-      const [movedCard] = sourceList.splice(source.index, 1);
 
-      // assign the new list id to the moved card
+      newOrderedData.forEach((card, index) => {
+        const updated = reorderedCards.find((c) => c.id === card.id);
+        if (updated) {
+          newOrderedData[index] = updated;
+        }
+      });
+    } else {
+      console.log("🔁 Moving issue to a different column");
+
+      const [movedCard] = sourceList.splice(source.index, 1);
       movedCard.status = destination.droppableId;
 
-      // add new card to the destination list
       destinationList.splice(destination.index, 0, movedCard);
 
-      sourceList.forEach((card, i) => {
-        card.order = i;
-      });
+      sourceList.forEach((card, i) => (card.order = i));
+      destinationList.forEach((card, i) => (card.order = i));
 
-      // update the order for each card in destination list
-      destinationList.forEach((card, i) => {
-        card.order = i;
+      console.log("📦 Updated Source List:", sourceList);
+      console.log("📦 Updated Destination List:", destinationList);
+
+      const updated = [...new Set([...sourceList, ...destinationList])];
+      newOrderedData.forEach((card, index) => {
+        const u = updated.find((c) => c.id === card.id);
+        if (u) {
+          newOrderedData[index] = u;
+        }
       });
     }
 
-    const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
-    setIssues(newOrderedData, sortedIssues);
+    const sortedIssues = [...newOrderedData].sort((a, b) => a.order - b.order);
+    console.log("✅ Final Issues (after reordering):", sortedIssues);
+
+    setIssues(sortedIssues);
+    console.log("📨 setIssues called");
 
     updateIssueOrderFn(sortedIssues);
+    console.log("📝 updateIssueOrderFn called");
   };
 
   if (issuesError) return <div>Error loading issues</div>;

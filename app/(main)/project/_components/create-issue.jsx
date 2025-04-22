@@ -47,7 +47,7 @@ export default function IssueCreationDrawer({
     data: users,
   } = useFetch(getOrganizationUsers);
 
-  console.log("user from Assigne", users);
+  
   const {
     control,
     register,

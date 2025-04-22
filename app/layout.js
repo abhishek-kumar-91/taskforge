@@ -5,7 +5,7 @@ import {ClerkProvider} from '@clerk/nextjs'
 
 
 export const metadata = {
-  title: "Work Scheduler",
+  title: "TaskForge - Track Your Work Progress",
   description: "Work schedule to increase productivity",
 };
 
